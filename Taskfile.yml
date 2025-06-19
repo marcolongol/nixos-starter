@@ -1,0 +1,191 @@
+version: '3'
+
+vars:
+  SCRIPTS_DIR: ./scripts
+  PROFILES_DIR: ./profiles
+  USERS_DIR: ./users
+  HOSTS_DIR: ./hosts
+
+tasks:
+  help:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  format:
+    desc: Format all Nix files
+    cmds:
+      - find . -name "*.nix" -exec nixfmt {} \;
+
+  check:
+    desc: Check Nix syntax
+    cmds: 
+      - nix flake check
+
+  # User Profile Management
+  user-profiles:list:
+    desc: List all available user profiles
+    cmds:
+      - node {{.SCRIPTS_DIR}}/user-profiles.js list
+
+  user-profiles:show:
+    desc: Show details of a specific user profile
+    cmds:
+      - node {{.SCRIPTS_DIR}}/user-profiles.js show name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  user-profiles:add:
+    desc: Create a new user profile
+    cmds:
+      - node {{.SCRIPTS_DIR}}/user-profiles.js add name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  user-profiles:remove:
+    desc: Remove a user profile
+    cmds:
+      - node {{.SCRIPTS_DIR}}/user-profiles.js remove name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  # Users Management
+  users:list:
+    desc: List all users
+    cmds:
+      - node {{.SCRIPTS_DIR}}/users.js list
+
+  users:list-detailed:
+    desc: List users with detailed information
+    cmds:
+      - node {{.SCRIPTS_DIR}}/users.js list-detailed
+
+  users:show:
+    desc: Show user configuration
+    cmds:
+      - node {{.SCRIPTS_DIR}}/users.js show name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  users:add:
+    desc: Create a new user
+    cmds:
+      - node {{.SCRIPTS_DIR}}/users.js add name={{.NAME}} {{if .EMAIL}}email={{.EMAIL}}{{end}} {{if .FULLNAME}}fullname="{{.FULLNAME}}"{{end}}
+    requires:
+      vars: [NAME]
+
+  users:remove:
+    desc: Remove a user
+    cmds:
+      - node {{.SCRIPTS_DIR}}/users.js remove name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  users:validate:
+    desc: Validate user file syntax
+    cmds:
+      - node {{.SCRIPTS_DIR}}/users.js validate name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  # Package Profiles Management
+  package-profiles:list:
+    desc: List all package profiles
+    cmds:
+      - node {{.SCRIPTS_DIR}}/package-profiles.js list
+
+  package-profiles:list-detailed:
+    desc: List package profiles with detailed information
+    cmds:
+      - node {{.SCRIPTS_DIR}}/package-profiles.js list-detailed
+
+  package-profiles:show:
+    desc: Show package profile content
+    cmds:
+      - node {{.SCRIPTS_DIR}}/package-profiles.js show name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  package-profiles:add:
+    desc: Create a new package profile
+    cmds:
+      - node {{.SCRIPTS_DIR}}/package-profiles.js add name={{.NAME}} {{if .DESCRIPTION}}description="{{.DESCRIPTION}}"{{end}}
+    requires:
+      vars: [NAME]
+
+  package-profiles:remove:
+    desc: Remove a package profile
+    cmds:
+      - node {{.SCRIPTS_DIR}}/package-profiles.js remove name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  package-profiles:validate:
+    desc: Validate package profile syntax
+    cmds:
+      - node {{.SCRIPTS_DIR}}/package-profiles.js validate name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  # Hosts Management
+  hosts:list:
+    desc: List all hosts
+    cmds:
+      - node {{.SCRIPTS_DIR}}/hosts.js list
+
+  hosts:show:
+    desc: Show host configuration
+    cmds:
+      - node {{.SCRIPTS_DIR}}/hosts.js show name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  hosts:add:
+    desc: Create a new host
+    cmds:
+      - node {{.SCRIPTS_DIR}}/hosts.js add name={{.NAME}} {{if .PROFILES}}profiles={{.PROFILES}}{{end}} {{if .SYSTEM}}system={{.SYSTEM}}{{end}}
+    requires:
+      vars: [NAME]
+
+  hosts:remove:
+    desc: Remove a host
+    cmds:
+      - node {{.SCRIPTS_DIR}}/hosts.js remove name={{.NAME}}
+    requires:
+      vars: [NAME]
+
+  hosts:add-user:
+    desc: Add user to host
+    cmds:
+      - node {{.SCRIPTS_DIR}}/hosts.js add-user host={{.HOST}} name={{.NAME}} {{if .PROFILES}}profiles={{.PROFILES}}{{end}} {{if .GROUPS}}groups={{.GROUPS}}{{end}}
+    requires:
+      vars: [HOST, NAME]
+
+  hosts:remove-user:
+    desc: Remove user from host
+    cmds:
+      - node {{.SCRIPTS_DIR}}/hosts.js remove-user host={{.HOST}} name={{.NAME}}
+    requires:
+      vars: [HOST, NAME]
+
+  # Cleanup and reset
+  cleanup:
+    desc: Reset repository to clean state (removes all customizations)
+    cmds:
+      - node {{.SCRIPTS_DIR}}/cleanup.js {{.CLI_ARGS}}
+
+  # Utility tasks
+  build:
+    desc: Build the NixOS configuration
+    cmds:
+      - sudo nixos-rebuild build --flake .
+
+  switch:
+    desc: Switch to the new NixOS configuration
+    cmds:
+      - sudo nixos-rebuild switch --flake .
+
+  test:
+    desc: Test the NixOS configuration
+    cmds:
+      - sudo nixos-rebuild test --flake .
