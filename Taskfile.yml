@@ -1,0 +1,47 @@
+version: '3'
+
+tasks:
+  help:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  format:
+    desc: Format all Nix files
+    cmds:
+      - find . -name "*.nix" -exec nixfmt {} \;
+
+  check:
+    desc: Check Nix syntax
+    cmds: 
+      - nix flake check
+
+  # Utility tasks
+  build:
+    desc: Build the NixOS configuration
+    cmds:
+      - sudo nixos-rebuild build --flake .
+
+  switch:
+    desc: Switch to the new NixOS configuration
+    cmds:
+      - sudo nixos-rebuild switch --flake .
+
+  test:
+    desc: Test the NixOS configuration
+    cmds:
+      - sudo nixos-rebuild test --flake .
+
+  test-overlays:
+    desc: Test custom overlay packages
+    cmds:
+      - echo "Testing custom overlay packages..."
+      - nix build .#nixosConfigurations.nixos-lt.pkgs.custom.hello-world --no-link
+      - nix build .#nixosConfigurations.nixos-lt.pkgs.custom.nvim-ide --no-link
+      - echo "✅ All overlay packages build successfully!"
+
+  show-overlays:
+    desc: Show available custom packages from overlays
+    cmds:
+      - echo "Available custom packages:"
+      - nix eval --json .#nixosConfigurations.nixos-lt.pkgs.custom --apply builtins.attrNames
