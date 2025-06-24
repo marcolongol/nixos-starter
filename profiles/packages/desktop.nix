@@ -7,6 +7,8 @@
   environment.systemPackages = with pkgs; [
     # Essential desktop applications
     firefox
+    thunderbird
+    libreoffice
 
     # Media
     vlc
@@ -14,6 +16,7 @@
     # Utilities
     flameshot
     xclip
+    remmina
 
     # Audio control
     pavucontrol
