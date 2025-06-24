@@ -119,6 +119,9 @@ in {
         # User management system
         ../users
 
+        # Custom modules
+        ../modules/joke-motd
+
         # Home Manager integration
         inputs.home-manager.nixosModules.home-manager
 
