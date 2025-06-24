@@ -15,18 +15,13 @@ let
       fallback;
 
   availableProfiles = discoverProfiles ../profiles/packages [
-    "common"
     "desktop"
     "development"
     "security"
   ];
 
-  availableUserProfiles = discoverProfiles ../profiles/users [
-    "admin"
-    "common"
-    "developer"
-    "minimal"
-  ];
+  availableUserProfiles =
+    discoverProfiles ../profiles/users [ "admin" "developer" "minimal" ];
 
   validateProfiles = profiles:
     let invalidProfiles = lib.subtractLists availableProfiles profiles;
@@ -87,20 +82,10 @@ in {
   mkSystem = { system ? "x86_64-linux", hostname, profiles ? [ ], users ? [ ]
     , extraModules ? [ ], enableSystemInfo ? true, enableValidation ? true
     , nixpkgsConfig ? { } }:
-    let
-      finalProfiles = if lib.elem "common" profiles then
-        profiles
-      else
-        [ "common" ] ++ profiles;
 
-      finalUsers = map (user:
-        if lib.elem "common" user.profiles then
-          user
-        else
-          user // { profiles = [ "common" ] ++ user.profiles; }) users;
-    in assert !enableValidation || validateProfiles finalProfiles;
+    assert !enableValidation || validateProfiles profiles;
     assert !enableValidation || validateHostPath hostname;
-    assert !enableValidation || validateUsers finalUsers;
+    assert !enableValidation || validateUsers users;
 
     lib.nixosSystem {
       inherit system;
@@ -127,16 +112,16 @@ in {
 
         # Profile and user configuration
         {
-          packageProfiles.enable = finalProfiles;
-          customUsers.users = finalUsers;
+          packageProfiles.enable = profiles;
+          customUsers.users = users;
           home-manager = homeManagerConfig;
         }
       ]
       # Optional system information and debugging
         ++ lib.optional enableSystemInfo (systemInfo {
           inherit hostname system;
-          profiles = finalProfiles;
-          users = finalUsers;
+          profiles = profiles;
+          users = users;
         })
         # User-provided additional modules
         ++ extraModules;

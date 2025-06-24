@@ -25,10 +25,8 @@ in {
         List of package profiles to enable.
         Available profiles: ${lib.concatStringsSep ", " availableProfiles}
 
-        Note: The "common" profile is automatically included for all systems.
-
         Profile descriptions:
-        - common: Essential packages for all systems (automatically included)
+        - common: Essential packages for all systems
         - desktop: Minimal GUI environment with qtile
         - development: Programming tools and environments
         - security: Security hardening and monitoring tools
@@ -38,8 +36,12 @@ in {
   };
 
   # Apply the selected profiles by merging their configurations
-  config = lib.mkMerge (map (profile:
+  config = lib.mkMerge ([
+    # Always include common profile when any profiles are enabled
+    (lib.mkIf (cfg.enable != [ ])
+      (import ./common.nix { inherit config lib pkgs; }))
+  ] ++ (map (profile:
     lib.mkIf (lib.elem profile cfg.enable)
     (import (./. + "/${profile}.nix") { inherit config lib pkgs; }))
-    availableProfiles);
+    availableProfiles));
 }

@@ -5,7 +5,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    # Version control
+    # Version control (git is also in common, but that's fine for clarity)
     git
     lazygit
 
