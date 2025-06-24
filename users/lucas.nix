@@ -1,11 +1,14 @@
 # Lucas's Individual User Configuration
 # This file contains custom configurations specific to Lucas
 # It extends the base developer profile with personal preferences
-
-{ lib, pkgs, ... }:
-
-let onePassPath = "~/.1password/agent.sock";
-in {
+{ lib
+, pkgs
+, ...
+}:
+let
+  onePassPath = "~/.1password/agent.sock";
+in
+{
   # Disable nixpkgs version mismatch warnings
   home.enableNixpkgsReleaseCheck = false;
 
@@ -19,8 +22,7 @@ in {
       pull.rebase = true;
       push.autoSetupRemote = true;
       gpg.format = "ssh";
-      "gpg \"ssh\"".program =
-        "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+      "gpg \"ssh\"".program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
       commit.gpgSign = false;
     };
   };
@@ -35,6 +37,9 @@ in {
 
     # version control and development tools
     gh
+
+    # Communication tools
+    webex
 
     # Additional development tools
     docker-compose
@@ -68,6 +73,26 @@ in {
       IdentityAgent ${onePassPath}
     '';
   };
+
+  home.file.".config/alacritty/alacritty.toml".text = ''
+    [window]
+    title = "Lucas's Terminal"
+    opacity = 0.6
+    blur = true
+    padding.x = 10
+    padding.y = 10
+    decorations = "Full"
+    decorations_theme_variant = "dark"
+    [font]
+    size = 9.0
+    [colors]
+    primary.background = "#282c34"
+    primary.foreground = "#abb2bf"
+    cursor.background = "#528bff"
+    cursor.foreground = "#ffffff"
+    selection.background = "#3e4451"
+    selection.foreground = "#ffffff"
+  '';
 
   # Custom home directory structure
   home.file = {
