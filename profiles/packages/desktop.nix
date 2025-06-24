@@ -42,8 +42,9 @@
 
   # Desktop services
   services = {
-    printing.enable = lib.mkDefault true;
-    blueman.enable = lib.mkDefault true;
+    printing.enable = lib.mkDefault true; # Enable printing support
+    blueman.enable = lib.mkDefault true; # Bluetooth manager
+    picom.enable = lib.mkDefault true; # Compositor for transparency and effects
   };
 
   # Audio
