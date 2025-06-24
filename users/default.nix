@@ -64,7 +64,7 @@ in {
         isNormalUser = true;
         extraGroups = user.extraGroups;
         shell = pkgs.zsh;
-        description = "User managed by users";
+        description = "${user.name}";
       };
     }) cfg.users);
 
