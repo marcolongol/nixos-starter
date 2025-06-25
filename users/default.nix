@@ -82,10 +82,14 @@ in {
           }) user.profiles))
       ] ++
         # Add individual user configuration if it exists
-        lib.optional (builtins.pathExists (./. + "/${user.name}.nix"))
-        (import (./. + "/${user.name}.nix") {
-          inherit config lib pkgs inputs;
-        }));
+        lib.optional (builtins.pathExists (./. + "/${user.name}.nix")
+          || builtins.pathExists (./. + "/${user.name}/default.nix")) (import
+            (if builtins.pathExists (./. + "/${user.name}.nix") then
+              (./. + "/${user.name}.nix")
+            else
+              (./. + "/${user.name}/default.nix")) {
+                inherit config lib pkgs inputs;
+              }));
     }) cfg.users);
   };
 }

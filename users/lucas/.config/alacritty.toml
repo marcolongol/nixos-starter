@@ -1,0 +1,19 @@
+[window]
+title = "Lucas's Terminal"
+opacity = 0.6
+blur = true
+padding.x = 10
+padding.y = 10
+decorations = "Full"
+decorations_theme_variant = "dark"
+
+[font]
+size = 9.0
+
+[colors]
+primary.background = "#282c34"
+primary.foreground = "#abb2bf"
+cursor.background = "#528bff"
+cursor.foreground = "#ffffff"
+selection.background = "#3e4451"
+selection.foreground = "#ffffff"
