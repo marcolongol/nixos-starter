@@ -1,9 +1,6 @@
 # Developer User Profile
 # Comprehensive development environment with modern tooling
-
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   # Import common user profile
   imports = [ ./common.nix ];
 
@@ -11,6 +8,7 @@
   home.packages = with pkgs; [
     # Terminal enhancements
     zsh-autosuggestions
+    zsh-completions
     zsh-syntax-highlighting
     starship
     eza
@@ -34,6 +32,7 @@
 
   # Extended shell configuration for developers
   programs.zsh = {
+    enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
@@ -49,11 +48,38 @@
     };
 
     initContent = ''
+      # History settings
+      HISTSIZE=10000
+      HISTFILE=~/.zsh_history
+      SAVEHIST=10000
+      HISTDUP=1000
+      setopt append_history # Append to the history file
+      setopt share_history # Share history across sessions
+      setopt hist_ignore_space # Ignore commands starting with space
+      setopt hist_save_no_dups # Save history without duplicates
+      setopt hist_ignore_all_dups # Ignore duplicates in history
+      setopt hist_find_no_dups # Find history without duplicates
+      setopt hist_verify # Verify history expansion
+
+      # bindkey settings
+      bindkey -e # Use emacs keybindings
+      bindkey '^p' up-line-or-search # Up arrow for history search
+      bindkey '^n' down-line-or-search # Down arrow for history search
+
       # Initialize zoxide
       eval "$(zoxide init zsh)"
 
       # Initialize starship
       eval "$(starship init zsh)"
+
+      # Initialize fzf
+      eval "$(fzf --zsh)"
+
+      # zstyle
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+      zstyle ':completion:*' list-colors \
+        'di=01;34:ln=01;36:so=01;35:pi=40;33:ex=01;32:bd=40;33;01:cd=40;33;01:su=37;41:sg=30;43:tw=30;42:ow=34;42'
+      zstyle ':completion:*' menu no
     '';
   };
 
