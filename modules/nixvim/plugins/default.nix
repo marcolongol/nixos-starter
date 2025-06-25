@@ -8,6 +8,7 @@
     ./bufferline.nix
     ./yanky.nix
     ./none-ls.nix
+    ./trouble.nix
   ];
 
   plugins = {

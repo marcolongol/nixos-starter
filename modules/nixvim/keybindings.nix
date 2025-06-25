@@ -157,5 +157,12 @@
       action = "<cmd>LazyGit<cr>";
       options.desc = "Open Lazygit";
     }
+
+    # Trouble
+    {
+      mode = "n";
+      key = "<leader>xx";
+      action = "<cmd>Trouble diagnostics toggle<cr>";
+    }
   ];
 }
