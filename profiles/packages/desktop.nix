@@ -18,6 +18,9 @@
     xclip
     remmina
 
+    # Application launcher
+    rofi
+
     # Audio control
     pavucontrol
 
@@ -31,14 +34,13 @@
     enable = lib.mkDefault true;
     windowManager.qtile.enable = lib.mkDefault true;
 
-    # Set default background (optional - you can change this path)
-    displayManager.sessionCommands = ''
-      ${pkgs.feh}/bin/feh --bg-scale ~/.background-image || ${pkgs.feh}/bin/feh --bg-fill /run/current-system/sw/share/pixmaps/nixos-logo.png
-    '';
+    displayManager = {
+      defaultSession = "qtile"; # Set qtile as the default session
+      sessionCommands = ''
+        ${pkgs.feh}/bin/feh --bg-scale ~/.background-image || ${pkgs.feh}/bin/feh --bg-fill /run/current-system/sw/share/pixmaps/nixos-logo.png;
+      '';
+    };
   };
-
-  # Display manager
-  # services.displayManager.sddm.enable = lib.mkDefault true;
 
   # Desktop services
   services = {
