@@ -12,8 +12,8 @@
     cursorcolumn = false;
 
     # Indentation
-    tabstop = 2;
-    shiftwidth = 2;
+    tabstop = 4;
+    shiftwidth = 4;
     expandtab = true;
     autoindent = true;
     smartindent = true;
@@ -27,7 +27,7 @@
     # UI improvements
     termguicolors = true;
     signcolumn = "yes";
-    wrap = false;
+    wrap = true;
     scrolloff = 8;
     sidescrolloff = 8;
 
@@ -43,19 +43,43 @@
     backup = false;
     updatetime = 250;
     timeoutlen = 300;
-  };
-
-  colorschemes.oxocarbon = {
-    enable = true;
-  };
-
-  diagnostic.settings = {
-    virtual_text = {
-      prefix = ""; # Custom prefix for virtual text diagnostics
-      spacing = 4; # Spacing between the diagnostic prefix and the text
+    textwidth = 87;
+    colorcolumn = "87";
+    list = true;
+    listchars = {
+      tab = "» ";
+      trail = "·";
+      extends = "»";
+      precedes = "«";
+      nbsp = "␣";
+      eol = "↲";
     };
-    signs = true; # Enable signs in the sign column
-    underline = true; # Underline diagnostics
-    update_in_insert = false; # Update diagnostics only in normal mode
+    autoread = true;
   };
+
+  colorschemes.oxocarbon.enable = true;
+
+  extraConfigLua = ''
+    -- Set the colorscheme
+    vim.cmd [[
+      hi Normal guibg=none
+      hi Normal guibg=none
+      hi NormalNC guibg=none
+      hi NormalFloat guibg=none
+      hi FloatBorder guibg=none
+      hi Pmenu guibg=none
+      hi PmenuSel guibg=none
+      hi NvimTreeNormal guibg=none
+      hi Comment guifg=#5c6370 gui=italic
+    ]]
+
+    -- Show eol character based on file format
+    vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
+        callback = function()
+            local listchars = vim.opt.listchars:get()
+            listchars.eol = (vim.opt.fileformat:get() == "dos") and "↲" or "↓"
+            vim.opt.listchars = listchars
+        end,
+    })
+  '';
 }

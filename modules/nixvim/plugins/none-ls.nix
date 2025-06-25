@@ -1,7 +1,6 @@
 {
   plugins.none-ls = {
     enable = true;
-    enableLspFormat = true;
     settings = {
       cmd = [ "bash -c nvim" ];
       debug = true;
@@ -16,6 +15,7 @@
         deadnix.enable = true;
         pylint.enable = true;
         checkstyle.enable = true;
+        mypy.enable = true;
       };
       formatting = {
         alejandra.enable = true;
@@ -23,6 +23,7 @@
         shfmt.enable = true;
         nixpkgs_fmt.enable = true;
         google_java_format.enable = false;
+        yamlfmt.enable = true;
         prettier = {
           enable = true;
           disableTsServerFormatter = true;
@@ -36,6 +37,7 @@
           '';
         };
       };
+      hover = { dictionary.enable = true; };
       completion = {
         luasnip.enable = true;
         spell.enable = true;

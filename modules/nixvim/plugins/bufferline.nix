@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       options = {
-        numbers = "buffer_id";
+        numbers = "none";
         close_command = "bdelete! %d";
         right_mouse_command = "bdelete! %d";
         left_mouse_command = "buffer %d";
@@ -27,7 +27,7 @@
         separator_style = "slant";
         enforce_regular_tabs = true;
         always_show_bufferline = true;
-        sort_by = "id";
+        sort_by = "insert_after_current";
       };
     };
   };

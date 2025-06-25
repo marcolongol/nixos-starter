@@ -1,9 +1,6 @@
 # Desktop environment and GUI applications
 # Minimal desktop setup with qtile window manager
-{ lib
-, pkgs
-, ...
-}: {
+{ lib, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     # Essential desktop applications
     firefox

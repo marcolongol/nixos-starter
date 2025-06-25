@@ -28,6 +28,7 @@
     bottom
     dust
     procs
+    lynx
   ];
 
   # Extended shell configuration for developers

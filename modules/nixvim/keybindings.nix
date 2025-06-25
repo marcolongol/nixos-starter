@@ -26,26 +26,6 @@
       options.desc = "Quit all";
     }
 
-    # File tree navigation
-    {
-      mode = "n";
-      key = "<leader>e";
-      action = "<cmd>NvimTreeToggle<cr>";
-      options.desc = "Toggle file tree";
-    }
-    {
-      mode = "n";
-      key = "<leader>o";
-      action = "<cmd>NvimTreeFocus<cr>";
-      options.desc = "Focus file tree";
-    }
-    {
-      mode = "n";
-      key = "<leader>E";
-      action = "<cmd>NvimTreeFindFile<cr>";
-      options.desc = "Find current file in tree";
-    }
-
     # Buffer navigation
     {
       mode = "n";
@@ -116,7 +96,7 @@
       options.desc = "Recent files";
     }
 
-    # Window navigation (bonus keybindings)
+    # Window navigation
     {
       mode = "n";
       key = "<C-h>";
@@ -140,29 +120,6 @@
       key = "<C-l>";
       action = "<C-w>l";
       options.desc = "Move to right window";
-    }
-
-    # Copilot keybindings
-    {
-      mode = "i";
-      key = "<C-g>";
-      action = "<cmd>CopilotChat<cr>";
-      options.desc = "Open Copilot chat";
-    }
-
-    # Lazygit keybinding
-    {
-      mode = "n";
-      key = "<leader>gg";
-      action = "<cmd>LazyGit<cr>";
-      options.desc = "Open Lazygit";
-    }
-
-    # Trouble
-    {
-      mode = "n";
-      key = "<leader>xx";
-      action = "<cmd>Trouble diagnostics toggle<cr>";
     }
   ];
 }

@@ -20,32 +20,22 @@
         lspBufAction = "implementation";
       }
       {
+        key = "gr";
+        lspBufAction = "code_action";
+      }
+      {
         key = "K";
         lspBufAction = "hover";
       }
       {
-        action =
-          lib.nixvim.mkRaw
-            "function() vim.diagnostic.jump({ count=-1, float=true }) end";
-        key = "<leader>k";
+        action = lib.nixvim.mkRaw
+          "function() vim.diagnostic.jump({ count=-1, float=true }) end";
+        key = "[d";
       }
       {
-        action =
-          lib.nixvim.mkRaw
-            "function() vim.diagnostic.jump({ count=1, float=true }) end";
-        key = "<leader>j";
-      }
-      {
-        action = "<CMD>LspStop<Enter>";
-        key = "<leader>lx";
-      }
-      {
-        action = "<CMD>LspStart<Enter>";
-        key = "<leader>ls";
-      }
-      {
-        action = "<CMD>LspRestart<Enter>";
-        key = "<leader>lr";
+        action = lib.nixvim.mkRaw
+          "function() vim.diagnostic.jump({ count=1, float=true }) end";
+        key = "]d";
       }
       {
         action =
@@ -89,9 +79,23 @@
         installRustc = false;
       };
       ts_ls.enable = true;
+      eslint.enable = true;
       pyright.enable = true;
       yamlls.enable = true;
       jsonls.enable = true;
     };
   };
+  extraConfigLua = ''
+    -- LSP
+    local signs = {
+      Error = "\u{ea87}",
+      Warn = "\u{f071}",
+      Info = "\u{f05a}",
+      Hint = "\u{f059}",
+    }
+    for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
+  '';
 }

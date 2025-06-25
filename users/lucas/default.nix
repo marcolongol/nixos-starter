@@ -1,11 +1,13 @@
 # Lucas's Individual User Configuration
 # This file contains custom configurations specific to Lucas
 # It extends the base developer profile with personal preferences
-{ config, lib, pkgs, inputs, ... }: {
+{ config
+, lib
+, pkgs
+, ...
+}: {
   # Import additional configuration modules
-  imports = [
-    ./config.nix # Configuration files
-  ];
+  imports = [ ./config ];
 
   # Disable nixpkgs version mismatch warnings
   home.enableNixpkgsReleaseCheck = false;
@@ -44,8 +46,7 @@
       pull.rebase = true;
       push.autoSetupRemote = true;
       gpg.format = "ssh";
-      "gpg \"ssh\"".program =
-        "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+      "gpg \"ssh\"".program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
       commit.gpgSign = false;
     };
   };

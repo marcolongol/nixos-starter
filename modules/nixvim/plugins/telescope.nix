@@ -20,7 +20,8 @@
           height = 0.8;
           preview_cutoff = 120;
         };
-        file_ignore_patterns = [ "^.git/" "^.svn/" "^node_modules/" "^%.cache/" ];
+        file_ignore_patterns =
+          [ "^.git/" "^.svn/" "^node_modules/" "^%.cache/" ];
         winblend = 0;
         border = { };
         borderchars = [ "─" "│" "─" "│" "╭" "╮" "╯" "╰" ];
@@ -44,4 +45,36 @@
       };
     };
   };
+  keymaps = [
+    {
+      mode = "n";
+      key = "<leader>ff";
+      action = "<cmd>Telescope find_files<cr>";
+      options.desc = "Find files";
+    }
+    {
+      mode = "n";
+      key = "<leader>fg";
+      action = "<cmd>Telescope live_grep<cr>";
+      options.desc = "Live grep";
+    }
+    {
+      mode = "n";
+      key = "<leader>fb";
+      action = "<cmd>Telescope buffers<cr>";
+      options.desc = "Find buffers";
+    }
+    {
+      mode = "n";
+      key = "<leader>fh";
+      action = "<cmd>Telescope help_tags<cr>";
+      options.desc = "Find help";
+    }
+    {
+      mode = "n";
+      key = "<leader>fr";
+      action = "<cmd>Telescope oldfiles<cr>";
+      options.desc = "Recent files";
+    }
+  ];
 }
