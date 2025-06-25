@@ -8,7 +8,6 @@
     ./bufferline.nix
     ./yanky.nix
     ./none-ls.nix
-    ./lsp-format.nix
   ];
 
   plugins = {
