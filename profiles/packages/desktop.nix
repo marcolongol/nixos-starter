@@ -1,9 +1,9 @@
 # Desktop environment and GUI applications
 # Minimal desktop setup with qtile window manager
-
-{ config, lib, pkgs, ... }:
-
-{
+{ lib
+, pkgs
+, ...
+}: {
   environment.systemPackages = with pkgs; [
     # Essential desktop applications
     firefox
@@ -69,15 +69,13 @@
 
   # Essential fonts
   fonts.packages = with pkgs; [
+    # Basic fonts
+    dejavu_fonts
     noto-fonts
-    noto-fonts-emoji
-    fira-code
 
     # Nerd Fonts for terminal/editor icons
     nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
     nerd-fonts.hack
-    nerd-fonts.dejavu-sans-mono
   ];
 
   # Network management
