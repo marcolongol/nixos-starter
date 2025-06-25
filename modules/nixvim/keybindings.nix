@@ -1,5 +1,31 @@
 {
   keymaps = [
+    # General keybindings
+    {
+      mode = "n";
+      key = "<leader>h";
+      action = "<cmd>nohlsearch<cr>";
+      options.desc = "Clear search highlights";
+    }
+    {
+      mode = "n";
+      key = "<leader>w";
+      action = "<cmd>w<cr>";
+      options.desc = "Save file";
+    }
+    {
+      mode = "n";
+      key = "<leader>q";
+      action = "<cmd>q<cr>";
+      options.desc = "Quit";
+    }
+    {
+      mode = "n";
+      key = "<leader>Q";
+      action = "<cmd>qa<cr>";
+      options.desc = "Quit all";
+    }
+
     # File tree navigation
     {
       mode = "n";
@@ -114,26 +140,6 @@
       key = "<C-l>";
       action = "<C-w>l";
       options.desc = "Move to right window";
-    }
-
-    # Quick save and quit
-    {
-      mode = "n";
-      key = "<leader>w";
-      action = "<cmd>w<cr>";
-      options.desc = "Save file";
-    }
-    {
-      mode = "n";
-      key = "<leader>q";
-      action = "<cmd>q<cr>";
-      options.desc = "Quit";
-    }
-    {
-      mode = "n";
-      key = "<leader>Q";
-      action = "<cmd>qa<cr>";
-      options.desc = "Quit all";
     }
 
     # Copilot keybindings
