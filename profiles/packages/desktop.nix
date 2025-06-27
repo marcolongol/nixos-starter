@@ -1,6 +1,9 @@
 # Desktop environment and GUI applications
 # Minimal desktop setup with qtile window manager
-{ lib, pkgs, ... }: {
+{ lib
+, pkgs
+, ...
+}: {
   environment.systemPackages = with pkgs; [
     # Essential desktop applications
     firefox
@@ -30,13 +33,17 @@
   services.xserver = {
     enable = lib.mkDefault true;
     windowManager.qtile.enable = lib.mkDefault true;
-
+    
     displayManager = {
-      defaultSession = "qtile"; # Set qtile as the default session
       sessionCommands = ''
         ${pkgs.feh}/bin/feh --bg-scale ~/.background-image || ${pkgs.feh}/bin/feh --bg-fill /run/current-system/sw/share/pixmaps/nixos-logo.png;
       '';
     };
+  };
+
+  # Display manager configuration (moved out of xserver in newer NixOS)
+  services.displayManager = {
+    defaultSession = "qtile"; # Set qtile as the default session
   };
 
   # Desktop services
