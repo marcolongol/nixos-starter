@@ -30,6 +30,7 @@ in {
         - desktop: Minimal GUI environment with qtile
         - development: Programming tools and environments
         - security: Security hardening and monitoring tools
+        - gaming: Gaming platforms, performance tools, and hybrid graphics support
       '';
       example = [ "desktop" "development" "security" ];
     };

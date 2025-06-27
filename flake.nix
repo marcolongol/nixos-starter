@@ -52,7 +52,7 @@
           };
           nixos-lt = lib.mkSystem {
             hostname = "nixos-lt";
-            profiles = [ "desktop" "security" "development" ];
+            profiles = [ "desktop" "security" "development" "gaming" ];
             users = [{
               name = "lucas";
               profiles = [ "admin" "developer" ];
