@@ -58,7 +58,7 @@
               profiles = [ "admin" "developer" ];
               extraGroups = [ "wheel" "networkmanager" ];
             }];
-            extraModules = [ ];
+            extraModules = [ ./modules/nvidia ];
           };
         };
       };
